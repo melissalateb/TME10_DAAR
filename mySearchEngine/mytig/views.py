@@ -71,3 +71,26 @@ class PromoDetail(APIView):
 #        NO DEFITION of put --> server will return "405 NOT ALLOWED"
 #    def delete(self, request, pk, format=None):
 #        NO DEFITION of delete --> server will return "405 NOT ALLOWED"
+
+
+class ShipPointsList(APIView):
+    def get(self, request, format=None):
+        response = requests.get(baseUrl + 'shipPoints/')
+        try:
+            jsondata = response.json()
+            print("Response ShipPoints status code:", response.status_code)
+            print("Response ShipPoints text:", response.text)
+            return Response(jsondata)
+        except requests.exceptions.JSONDecodeError:
+            return Response({"error": "Invalid JSON response"}, status=500)
+
+class ShipPointDetail(APIView):
+    def get(self, request, pk, format=None):
+        response = requests.get(baseUrl + f'shipPoint/{pk}/')
+        try:
+            jsondata = response.json()
+            print(f"Response ShipPoint {pk} status code:", response.status_code)
+            print(f"Response ShipPoint {pk} text:", response.text)
+            return Response(jsondata)
+        except requests.exceptions.JSONDecodeError:
+            return Response({"error": "Invalid JSON response"}, status=500)
